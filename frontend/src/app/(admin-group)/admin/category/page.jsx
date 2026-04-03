@@ -5,70 +5,142 @@ import StatusBtn from "@/components/admin/StatusBtn";
 import DeleteBtn from "@/components/admin/DeleteBtn";
 
 const CategoryTable = async () => {
-  const allcategories = await getCategories()
-  const categories = await allcategories.allcategories
+  const allcategories = await getCategories();
+  const categories = allcategories.allcategories;
+
   return (
-    <div className="p-6">
-      <Link href={"/admin/category/add"}>
-        <button className="px-6 py-2 bg-amber-600 text-white my-3 cursor-pointer">Add Category</button>
-      </Link>
+    <div className="p-6 bg-gray-50 min-h-screen">
 
-      <div className="bg-white shadow-md rounded-xl overflow-hidden">
-        <div className="p-4 border-b">
-          <h2 className="text-xl font-semibold">Category Table</h2>
-        </div>
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold text-gray-800">
+          Category Management
+        </h1>
 
-        <table className="w-full text-left">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="p-4 text-sm font-semibold text-gray-600">Name</th>
-              <th className="p-4 text-sm font-semibold text-gray-600">Slug</th>
-              <th className="p-4 text-sm font-semibold text-gray-600">Status</th>
-              <th className="p-4 text-sm font-semibold text-gray-600">Actions</th>
-            </tr>
-          </thead>
+        <Link href="/admin/category/add">
+          <button className="px-5 py-2 bg-amber-600 text-white rounded-lg shadow hover:bg-amber-700 transition">
+            + Add Category
+          </button>
+        </Link>
+      </div>
 
-          <tbody>
-            {
-              categories.length == 0 ?
+      {/* Table Card */}
+      <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+
+        {/* Table */}
+        <div className="overflow-x-auto">
+          <table className="w-full">
+
+            {/* Head */}
+            <thead className="bg-gray-100 text-gray-700 text-sm">
+              <tr>
+                <th className="p-4 text-left">Image</th>
+                <th className="p-4 text-left">Name</th>
+                <th className="p-4 text-left">Slug</th>
+                <th className="p-4 text-left">Status</th>
+                <th className="p-4 text-left">Actions</th>
+              </tr>
+            </thead>
+
+            {/* Body */}
+            <tbody>
+
+              {categories.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="align-middle text-center p-4">
-                    <h1 className="font-bold">No Categories found</h1>
+                  <td
+                    colSpan={5}
+                    className="text-center p-10 text-gray-500"
+                  >
+                    <h2 className="text-lg font-semibold">
+                      No Categories Found
+                    </h2>
                   </td>
                 </tr>
-
-
-                :
+              ) : (
                 categories.map((item, index) => (
                   <tr
                     key={index}
                     className="border-b hover:bg-gray-50 transition"
                   >
-                    <td className="p-4 font-medium">{item.name}</td>
-                    <td className="p-4 text-gray-600">{item.slug}</td>
 
-                    <td className="p-4 flex gap-2">
-                      <StatusBtn value={item.status} id={item._id} field="status" />
-                      <StatusBtn value={item.is_home} id={item._id} field="is_home" />
-                      <StatusBtn value={item.is_top} id={item._id} field="is_top" />
-                      <StatusBtn value={item.is_popular} id={item._id} field="is_popular" />
+                    {/* Image */}
+                    <td className="p-4">
+                      <img
+                        src={
+                          process.env.NEXT_PUBLIC_CATEGORY_IMAGE +
+                          item.image
+                        }
+                        alt={item.name}
+                        className="w-14 h-14 object-cover rounded-lg border"
+                      />
                     </td>
 
-                    <td className="p-4 space-x-2">
-                      <button className="px-3 py-1 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600">
-                        Edit
-                      </button>
-
-                      <DeleteBtn id={item._id} />
+                    {/* Name */}
+                    <td className="p-4 font-semibold text-gray-800">
+                      {item.name}
                     </td>
+
+                    {/* Slug */}
+                    <td className="p-4 text-gray-600">
+                      {item.slug}
+                    </td>
+
+                    {/* Status */}
+                    <td className="p-4">
+                      <div className="flex flex-wrap gap-2">
+                        <StatusBtn
+                          value={item.status}
+                          id={item._id}
+                          field="status"
+                        />
+
+                        <StatusBtn
+                          value={item.is_home}
+                          id={item._id}
+                          field="is_home"
+                        />
+
+                        <StatusBtn
+                          value={item.is_top}
+                          id={item._id}
+                          field="is_top"
+                        />
+
+                        <StatusBtn
+                          value={item.is_popular}
+                          id={item._id}
+                          field="is_popular"
+                        />
+                      </div>
+                    </td>
+
+                    {/* Actions */}
+                    <td className="p-4">
+                      <div className="flex gap-2">
+
+                        <Link
+                          href={`/admin/category/edit/${item._id}`}
+                        >
+                          <button className="px-4 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+                            Edit
+                          </button>
+                        </Link>
+
+                        <DeleteBtn id={item._id} />
+
+                      </div>
+                    </td>
+
                   </tr>
-                ))}
-          </tbody>
-        </table>
+                ))
+              )}
+
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
 };
 
 export default CategoryTable;
-

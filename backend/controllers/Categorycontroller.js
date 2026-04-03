@@ -1,29 +1,49 @@
-const categorymodel = require("../models/Categorymodel")
+const categorymodel = require("../models/Categorymodel");
+const { uniqueName } = require("../utils/helper");
 
 const createCategory = async (req, res) => {
     try {
-        const name = req.body.name;
-        const slug = req.body.slug;
+        const { name, slug } = req.body;
+        const category_image = req.files.image;
 
-        if (!name || !slug) {
-            res.status(400).json({
+        if (!name || !slug || !category_image) {
+            return res.status(400).json({
                 message: "All Fields are required",
                 success: false
-            })
+            });
         }
-        const iscategoryexist = await categorymodel.findOne({ name })
+
+        const iscategoryexist = await categorymodel.findOne({ name });
+
         if (iscategoryexist) {
             return res.status(409).json({
                 message: "Category Already Exist",
                 success: false
-            })
+            });
         }
 
-        await categorymodel.create({ name, slug });
+        const image = uniqueName(category_image);
+        const destination = "./public/images/category/" + image;
 
-        res.status(201).json({
-            message: "Data Created Successfully",
-            success: true
+        category_image.mv(destination, async (error) => {
+
+            if (error) {
+                return res.status(500).json({
+                    message: "Unable to upload file",
+                    success: false
+                });
+            }
+
+            await categorymodel.create({
+                name,
+                slug,
+                image: image
+            });
+
+            res.status(201).json({
+                message: "Data Created Successfully",
+                success: true
+            });
 
         });
 
@@ -52,7 +72,7 @@ const getCategory = async (req, res) => {
     }
 }
 
-const getbyid = async(req,res)=>{
+const getbyid = async (req, res) => {
     try {
         const id = req.params.id
         const allcategories = await categorymodel.findById(id)
@@ -132,5 +152,74 @@ const updateCategory = async (req, res) => {
         })
     }
 }
+const updateCategoryById = async (req, res) => {
+    try {
 
-module.exports = { createCategory, getCategory, deleteCategory, updateCategory, getbyid }
+        const { name, slug } = req.body
+        const id = req.params.id
+        const category_image = req.files ? req.files.image : null
+
+        const iscategoryexist = await categorymodel.findById(id)
+
+        if (!iscategoryexist) {
+            return res.status(404).json({
+                message: "Category Not found",
+                success: false
+            })
+        }
+
+        const update = {}
+
+        if (name) update.name = name
+        if (slug) update.slug = slug
+
+        console.log(update, "update")
+
+        if (category_image) {
+
+            const image = uniqueName(category_image.name)
+            const destination = "./public/images/category/" + image
+
+            category_image.mv(destination, async (error) => {
+
+                if (error) {
+                    return res.status(500).json({
+                        message: "Internal Server Error",
+                        success: false
+                    })
+                }
+
+                update.image = image
+
+                await categorymodel.findByIdAndUpdate(id, {
+                    $set: update
+                })
+
+                res.status(201).json({
+                    message: "Category Updated Successfully",
+                    success: true
+                })
+            })
+
+        } else {
+
+            await categorymodel.findByIdAndUpdate(id, {
+                $set: update
+            })
+
+            res.status(201).json({
+                message: "Category Updated Successfully",
+                success: true
+            })
+        }
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            message: "Internal Server Error",
+            success: false
+        })
+    }
+}
+
+module.exports = { createCategory, getCategory, deleteCategory, updateCategory, getbyid, updateCategoryById }

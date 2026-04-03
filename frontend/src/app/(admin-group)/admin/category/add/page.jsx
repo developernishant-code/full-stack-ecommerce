@@ -23,12 +23,12 @@ export default function CategoryForm() {
     function submithandler(event) {
         event.preventDefault();
         setloading(true)
-        const data = {
-            name: nameRef.current.value,
-            slug: slugRef.current.value,
-        };
+        const payload = new FormData()
+        payload.append("name", nameRef.current.value)
+        payload.append("slug", slugRef.current.value)
+        payload.append("image", event.target.image.files[0])
         axiosinstance
-            .post("/category/create", data)
+            .post("/category/create", payload)
             .then((res) => {
                 if (res.data.success) {
                     notify(res?.data?.message, true);
@@ -45,10 +45,11 @@ export default function CategoryForm() {
 
                 notify(message, false);
             }).finally(
-                ()=>{
+                () => {
                     setloading(false)
                 }
             )
+            // console.log(payload)
     }
     return (
         <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
@@ -108,8 +109,9 @@ export default function CategoryForm() {
                                     </svg>
                                     <p className="text-sm text-gray-500">Click to upload image</p>
                                 </div>
-                                <input type="file" className="hidden" />
+                                <input type="file" name="image" accept="/image" className="hidden" />
                             </label>
+                            
                         </div>
                     </div>
 
@@ -127,7 +129,7 @@ export default function CategoryForm() {
                             type="submit"
                             className="w-full bg-blue-600 text-white py-2.5 cursor-pointer rounded-lg hover:bg-blue-700 transition"
                         >
-                           {loading ? "wait..." : "Add Category"}
+                            {loading ? "wait..." : "Add Category"}
                         </button>
                     </div>
                 </form>

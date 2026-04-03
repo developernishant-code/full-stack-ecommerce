@@ -8,4 +8,13 @@ async function getCategories() {
     }
 }
 
-export { getCategories } 
+async function getCategoryById(id) {
+    try {
+        const res = await axiosinstance.get(`category/${id}`)
+        return res.data
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export { getCategories,getCategoryById } 
