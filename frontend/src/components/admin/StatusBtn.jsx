@@ -4,12 +4,12 @@ import { axiosinstance } from "@/helper/helper";
 import { notify } from "@/helper/helper";
 import { useRouter } from "next/navigation";
 
-function StatusBtn({ value, id, field }) {
+function StatusBtn({ value, id, field,endpoint }) {
 
   const router = useRouter()
 
   function statusHandler() {
-    axiosinstance.patch(`category/update/${id}`, {field})
+    axiosinstance.patch(`${endpoint}/update/${id}`, {field})
       .then((res) => {
         if (res.data.success) {
           notify(res?.data?.message, true);

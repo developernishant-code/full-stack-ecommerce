@@ -7,6 +7,7 @@ import DeleteBtn from "@/components/admin/DeleteBtn";
 const CategoryTable = async () => {
   const allcategories = await getCategories();
   const categories = allcategories.allcategories;
+  
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
@@ -92,24 +93,28 @@ const CategoryTable = async () => {
                           value={item.status}
                           id={item._id}
                           field="status"
+                          endpoint="category"
                         />
 
                         <StatusBtn
                           value={item.is_home}
                           id={item._id}
                           field="is_home"
+                          endpoint="category"
                         />
 
                         <StatusBtn
                           value={item.is_top}
                           id={item._id}
                           field="is_top"
+                          endpoint="category"
                         />
 
                         <StatusBtn
                           value={item.is_popular}
                           id={item._id}
                           field="is_popular"
+                          endpoint="category"
                         />
                       </div>
                     </td>
@@ -126,7 +131,7 @@ const CategoryTable = async () => {
                           </button>
                         </Link>
 
-                        <DeleteBtn id={item._id} />
+                        <DeleteBtn id={item._id} endpoint="category" />
 
                       </div>
                     </td>

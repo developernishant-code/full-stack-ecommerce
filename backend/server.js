@@ -3,12 +3,14 @@ const express = require("express")
 const cors = require("cors")
 const mongoose = require("mongoose")
 const categoryrouter = require('./routers/Categoryrouter')
+const { BrandRouter } = require('./routers/Brandrouter')
 const server = express()
-server.use(cors({origin:"http://localhost:3000"}))
+server.use(cors({origin:"http://localhost:3001"}))
 server.use(express.static("public"))
 
 server.use(express.json())
 server.use("/category",categoryrouter)
+server.use("/brand",BrandRouter)
 
 
 

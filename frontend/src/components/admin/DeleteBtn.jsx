@@ -1,11 +1,11 @@
 'use client'
 import axios from 'axios'
 import React from 'react'
-import { notify } from '@/helper/helper';
+import { axiosinstance, notify } from '@/helper/helper';
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
 
-export default function DeleteBtn({ id }) {
+export default function DeleteBtn({ id,endpoint }) {
     const router = useRouter()
     function deleteHandler() {
         Swal.fire({
@@ -24,7 +24,7 @@ export default function DeleteBtn({ id }) {
                 icon: "success"
 
             },
-                axios.delete(`http://localhost:7000/category/delete/${id}`)
+                axiosinstance.delete(`http://localhost:7000/${endpoint}/delete/${id}`)
                     .then((res) => {
                         if (res.data.success) {
                             notify(res?.data?.message, true);

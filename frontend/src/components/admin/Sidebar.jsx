@@ -11,6 +11,7 @@ import { IoColorPaletteOutline } from "react-icons/io5";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
 import { FaBars } from "react-icons/fa";
+import { SiBrandfetch } from "react-icons/si";
 
 export default function Sidebar() {
 
@@ -29,6 +30,11 @@ export default function Sidebar() {
       link: "/admin/category"
     },
     {
+      name: "Brand",
+      icon: SiBrandfetch,
+      link: "/admin/brand"
+    },
+    {
       name: "Products",
       icon: FaProductHunt,
       link: "/admin/products"
@@ -36,7 +42,7 @@ export default function Sidebar() {
     {
       name: "Product Colors",
       icon: IoColorPaletteOutline,
-      link: "/admin/colors"
+      link: "/admin/color"
     },
     {
       name: "Users",
@@ -53,7 +59,7 @@ export default function Sidebar() {
   return (
     <aside className={`${collapsed ? "w-20 bg-[#0a1727] h-screen flex items-center justify-center flex-col  transition-all duration-300" : "w-64 bg-[#0a1727] h-screen flex flex-col  transition-all duration-300"} `}>
 
-      
+      {/* Logo */}
       <div className="flex items-center justify-between px-5 py-4">
         <h1 className={`text-xl font-bold text-white ${collapsed && "hidden"}`}>
           🚀 Admin<span className="text-orange-500">Core</span>
@@ -64,7 +70,7 @@ export default function Sidebar() {
         />
       </div>
 
-      
+      {/* Navigation */}
       <nav className="flex-1 px-3 space-y-2">
 
         {navItems.map((item, i) => {
@@ -89,7 +95,7 @@ export default function Sidebar() {
 
       </nav>
 
-      
+      {/* Footer */}
       <div className="p-4 text-xs text-gray-400 text-center">
         {!collapsed && "© 2026 AdminCore"}
       </div>
