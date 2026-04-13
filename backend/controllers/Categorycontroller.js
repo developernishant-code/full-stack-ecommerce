@@ -58,11 +58,32 @@ const createCategory = async (req, res) => {
 
 const getCategory = async (req, res) => {
     try {
-        const allcategories = await categorymodel.find()
+        const query = req.query
+        // console.log(query)
+        const limit = query.limit ? parseInt(query.limit) : 0
+        const filter = {}
+        if (query.status) {
+            filter.status = query.status === "true"
+        }
+        if (query.is_top) {
+            filter.is_top = query.is_top === "true"
+        }
+        if (query.is_home) {
+            filter.is_home = query.is_home === "true"
+        }
+        if (query.is_popular) {
+            filter.is_popular = query.is_popular === "true"
+        }
+        if (query.id) filter._id = query.id
+
+
+        const allcategories = await categorymodel.find(filter).limit(limit)
+        const total = await categorymodel.find().countDocuments()
         res.status(200).json({
             message: "Data found Successfully",
             success: true,
-            allcategories
+            allcategories,
+            total
         })
     } catch (error) {
         res.status(500).json({

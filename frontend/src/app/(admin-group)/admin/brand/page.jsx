@@ -60,7 +60,7 @@ export default async function BrandTable() {
 
                     <td className="py-4 px-4 text-gray-500">{brand.slug}</td>
 
-                    <td className="py-4 px-4 space-x-2">
+                    <td className="py-4 flex px-4 space-x-2">
                       <StatusBtn
                           value={brand.is_top}
                           id={brand._id}

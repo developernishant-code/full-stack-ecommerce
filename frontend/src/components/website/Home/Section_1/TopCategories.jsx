@@ -1,13 +1,10 @@
-import Image from 'next/image'
 
-const topCategories = [
-    { name: 'Laptops', image: '/categories/laptops.png' },
-    { name: 'PC Gaming', image: '/categories/pc-gaming.png' },
-    { name: 'Headphones', image: '/categories/headphones.png' },
-    { name: 'Monitors', image: '/categories/monitors.png' },
-]
+import { getCategories } from '@/api/Categoryapi'
 
-export default function TopCategories() {
+
+export default async function TopCategories() {
+    const categories = await getCategories({ limit: 4,status:true,is_home:true })
+    const topCategories = categories.allcategories
     return (
         <div className="bg-white rounded-xl shadow-sm p-4">
             <div className="flex items-center justify-between mb-4">
@@ -24,14 +21,13 @@ export default function TopCategories() {
                         className="flex flex-col items-center justify-center rounded-lg p-4 hover:shadow transition cursor-pointer"
                     >
                         <div className="relative w-16 h-16 mb-3">
-                            <Image
-                                src={cat.image}
-                                alt={cat.name}
-                                fill
-                                className="object-cover"
-                            />
+                            <img
+                                    className="w-[55px] h-[55px] rounded-md object-cover"
+                                    src={process.env.NEXT_PUBLIC_CATEGORY_IMAGE + cat.image}
+                                    alt={cat.name}
+                                />
                         </div>
-                        <span className="text-sm font-medium">{cat.name}</span>
+                        <span className="text-sm text-center font-medium">{cat.name}</span>
                     </div>
                 ))}
             </div>

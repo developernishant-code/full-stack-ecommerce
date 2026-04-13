@@ -1,19 +1,9 @@
-import Image from 'next/image'
+import { GetBrands } from '@/api/Brand'
 
-const brands = [
-    { name: 'Digitek', logo: '/brands/digitek.png' },
-    { name: 'Grafbase', logo: '/brands/grafbase.png' },
-    { name: 'Jamx', logo: '/brands/jamx.png' },
-    { name: 'Logo9', logo: '/brands/Logo9.png' },
-    { name: 'Logo10', logo: '/brands/Logo10.png' },
-    { name: 'MSI', logo: '/brands/msi.png' },
-    { name: 'OAK', logo: '/brands/oak.png' },
-    { name: 'Ohbear', logo: '/brands/ohbear.png' },
-    { name: 'Snyk', logo: '/brands/snyk.png' },
-    { name: 'Tekreact', logo: '/brands/tekreact.png' },
-]
 
-export default function FeaturedBrands() {
+export default async function FeaturedBrands() {
+    const brands = await GetBrands({limit:4,status:true,is_top:true})
+    const data = brands.allBrand
     return (
         <div className="bg-white rounded-xl shadow-sm p-4">
             <div className="flex items-center justify-between mb-4">
@@ -24,17 +14,16 @@ export default function FeaturedBrands() {
             </div>
 
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 gap-4 items-center">
-                {brands.map((brand, index) => (
+                {data.map((brand, index) => (
                     <div
                         key={index}
                         className="flex items-center justify-center h-14 rounded-lg hover:shadow transition bg-white"
                     >
-                        <Image
-                            src={brand.logo}
-                            alt={brand.name}
-                            width={90}
-                            height={40}
-                            className="object-contain"
+                        <img
+                            src={process.env.NEXT_PUBLIC_BRAND_IMAGE + brand.image}
+                            
+                            
+                            className="object-contain w-15"
                         />
                     </div>
                 ))}

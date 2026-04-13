@@ -54,7 +54,18 @@ const createBrand = async (req, res) => {
 
 const getBrand = async (req, res) => {
     try {
-        const allBrand = await BrandModel.find()
+        const query = req.query
+        const filter = {}
+        const limit = query.limit ? parseInt(query.limit) : 0
+        if (query.id) filter._id = query.id
+        if (query.status) {
+            filter.status = query.status === "true"
+        }
+        if (query.is_top) {
+            filter.is_top = query.is_top === "true"
+        }
+        
+        const allBrand = await BrandModel.find(filter).limit(limit)
         return res.status(200).json({
             message: "Data founded",
             success: true,
@@ -138,10 +149,10 @@ const updateBrand = async (req, res) => {
         await BrandModel.findByIdAndUpdate(
             id,
             { [field]: !isbrandexist[field] }
-            
+
         )
 
-        
+
         return res.status(200).json({
             message: "Brand Updated Successfully",
             success: true
@@ -225,4 +236,4 @@ const editbrand = async (req, res) => {
     }
 }
 
-module.exports = { createBrand, getBrand, getBrandById, deleteBrand, updateBrand, editbrand}
+module.exports = { createBrand, getBrand, getBrandById, deleteBrand, updateBrand, editbrand }

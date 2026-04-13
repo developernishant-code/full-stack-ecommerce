@@ -35,14 +35,14 @@ export default function Sidebar() {
       link: "/admin/brand"
     },
     {
-      name: "Products",
-      icon: FaProductHunt,
-      link: "/admin/products"
-    },
-    {
       name: "Product Colors",
       icon: IoColorPaletteOutline,
       link: "/admin/color"
+    },
+    {
+      name: "Product",
+      icon: FaProductHunt,
+      link: "/admin/product"
     },
     {
       name: "Users",

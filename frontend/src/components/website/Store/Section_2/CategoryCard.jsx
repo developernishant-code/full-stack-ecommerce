@@ -1,11 +1,11 @@
-const CategoryCard = ({ title, items }) => {
+const CategoryCard = ({ name,image }) => {
     return (
-        <div className="flex items-center gap-4 p-4 rounded-lg hover:bg-gray-50 transition cursor-pointer">
+        <div className="flex items-center flex-col gap-4 p-4 rounded-lg hover:bg-gray-50 transition cursor-pointer">
             {/* Image */}
-            <div className="w-14 h-14 flex items-center justify-center bg-gray-100 rounded-md">
+            <div className="w-14 h-14 flex   items-center justify-center bg-gray-100 rounded-md">
                 <img
-                    src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"
-                    alt={title}
+                    src={process.env.NEXT_PUBLIC_CATEGORY_IMAGE + image}
+                    alt={name}
                     className="h-10 object-contain"
                 />
             </div>
@@ -13,11 +13,9 @@ const CategoryCard = ({ title, items }) => {
             {/* Text */}
             <div>
                 <h4 className="text-sm font-semibold text-gray-900">
-                    {title}
+                    {name}
                 </h4>
-                <p className="text-xs text-gray-500">
-                    {items} Items
-                </p>
+               
             </div>
         </div>
     );

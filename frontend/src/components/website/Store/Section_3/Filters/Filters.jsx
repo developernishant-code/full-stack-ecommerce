@@ -1,87 +1,29 @@
-const Filters = () => {
-
-    const filterData = {
-        categories: {
-            title: "CATEGORIES",
-            main: "Cell Phones & Tablets",
-            items: [
-                "All",
-                "Iphone",
-                "Samsung",
-                "Xiaomi",
-                "Asus",
-                "Oppo",
-                "Gaming Smartphone",
-                "Ipad",
-                "Window Tablets",
-                "eReader",
-                "Smartphone Chargers",
-                "5G Support Smartphone",
-                "Smartphone Accessories",
-                "Tablets Accessories",
-                "Cell Phones  $200",
-            ],
-        },
-
-        price: {
-            min: 0,
-            max: 10000,
-        },
-
-        rating: ["(52)", "(24)", "(5)", "(1)"],
-
-        screenSize: [
-            '7" & Under',
-            '7.1" - 8.9"',
-            '9" - 10.9"',
-            '11" & Greater',
-        ],
-
-        colors: [
-            "bg-red-600",
-            "bg-blue-600",
-            "bg-sky-400",
-            "bg-gray-900",
-            "bg-white border",
-            "bg-green-500",
-            "bg-gray-400",
-            "bg-indigo-600",
-        ],
-
-        memory: [
-            "12GB (4)",
-            "8GB (3)",
-            "6GB (12)",
-            "4GB (6)",
-            "3GB (7)",
-            "1.5GB (1)",
-            "1GB (1)",
-            "512MB (2)",
-        ],
-
-        conditions: ["New (21)", "Like New (2)", "Open Box (38)"],
-    };
-
+import { GetBrands } from "@/api/Brand";
+import { getCategories } from "@/api/Categoryapi";
+import { GetColor } from "@/api/Color";
+async function Filters() {
+    const [cateRes, BrandRes, ColorRes] = await Promise.all([
+        getCategories(),
+        GetBrands(),
+        GetColor()
+    ])
+    console.log(ColorRes)
 
     return (
+
         <div className="bg-[#f3f4f8] rounded-xl p-5 text-sm space-y-6">
 
             {/* CATEGORIES */}
             <div>
-                <h4 className="font-semibold mb-3">{filterData.categories.title}</h4>
 
                 <button className="w-full bg-white border rounded-md py-2 mb-4 font-medium">
                     All Categories
                 </button>
 
-                <p className="font-medium text-black mb-1">
-                    {filterData.categories.main}
-                </p>
-
                 <div className="space-y-1 text-gray-600">
-                    {filterData.categories.items.map((item) => (
-                        <p key={item} className="ml-3 hover:text-black cursor-pointer">
-                            {item}
+                    {cateRes?.allcategories?.map((item, index) => (
+                        <p key={index} className="ml-3 hover:text-black cursor-pointer">
+                            {item.name}
                         </p>
                     ))}
                 </div>
@@ -89,7 +31,7 @@ const Filters = () => {
 
             <hr />
 
-            {/* BY PRICE */}
+            {/* BY PRICE
             <div>
                 <h4 className="font-semibold mb-3">BY PRICE</h4>
 
@@ -120,7 +62,7 @@ const Filters = () => {
             <hr />
 
             {/* BY RATING */}
-            <div>
+            {/* <div>
                 <h4 className="font-semibold mb-3">BY RATING</h4>
 
                 <div className="space-y-2 text-gray-600">
@@ -131,22 +73,21 @@ const Filters = () => {
                         </label>
                     ))}
                 </div>
-            </div>
+            </div> */}
 
             <hr />
 
-            {/* BY SCREEN SIZE */}
             <div>
-                <h4 className="font-semibold mb-3">BY SCREEN SIZE</h4>
 
-                <div className="flex flex-wrap gap-2">
-                    {filterData.screenSize.map((size) => (
-                        <button
-                            key={size}
-                            className="bg-white border px-3 py-1 rounded text-xs hover:border-green-500"
-                        >
-                            {size}
-                        </button>
+                <button className="w-full bg-white border rounded-md py-2 mb-4 font-medium">
+                    All Brands
+                </button>
+
+                <div className="space-y-1 text-gray-600">
+                    {BrandRes?.allBrand?.map((item, index) => (
+                        <p key={index} className="ml-3 hover:text-black cursor-pointer">
+                            {item.name}
+                        </p>
                     ))}
                 </div>
             </div>
@@ -158,11 +99,12 @@ const Filters = () => {
                 <h4 className="font-semibold mb-3">BY COLOR</h4>
 
                 <div className="flex flex-wrap gap-2">
-                    {filterData.colors.map((color, i) => (
-                        <span
+                    {ColorRes?.allColor?.map((color, i) => (
+                        <div
                             key={i}
-                            className={`w-6 h-6 rounded cursor-pointer ${color}`}
-                        ></span>
+                            className="w-10 h-10 rounded-full"
+                            style={{ backgroundColor: color.hex_code }}
+                        ></div>
                     ))}
                 </div>
             </div>
@@ -170,7 +112,7 @@ const Filters = () => {
             <hr />
 
             {/* BY MEMORY */}
-            <div>
+            {/* <div>
                 <h4 className="font-semibold mb-3">BY MEMORY</h4>
 
                 <div className="grid grid-cols-2 gap-2 text-gray-600">
@@ -181,12 +123,12 @@ const Filters = () => {
                         </label>
                     ))}
                 </div>
-            </div>
+            </div> */}
 
             <hr />
 
             {/* BY CONDITIONS */}
-            <div>
+            {/* <div>
                 <h4 className="font-semibold mb-3">BY CONDITIONS</h4>
 
                 <div className="space-y-2 text-gray-600">
@@ -197,16 +139,16 @@ const Filters = () => {
                         </label>
                     ))}
                 </div>
-            </div>
+            </div> */}
 
             <hr />
 
             {/* PROMO CARD */}
-            <div className="bg-black text-white rounded-xl p-4">
+            {/* <div className="bg-black text-white rounded-xl p-4">
                 <h4 className="font-semibold mb-1">OKOdo hero 11+</h4>
                 <p className="text-xs opacity-80 mb-2">5K wireless</p>
                 <p className="text-green-400 text-lg font-bold">$169</p>
-            </div>
+            </div> */} */
 
         </div>
     );
