@@ -1,54 +1,65 @@
 const Usermodel = require("../models/Usermodel")
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr(process.env.SECRET_KEY);
-const { sendOtpMail } = require("../utils/sendOtp")
+const { sendOtpMail } = require("../utils/sendOtp");
+const generateToken = require("../utils/generatetoken");
 
 const createuser = async (req, res) => {
     try {
+        const { name, email, password } = req.body;
 
-        const { name, email, password } = req.body
+         
         if (!name || !email || !password) {
             return res.status(400).json({
                 message: "All Fields are required",
                 success: false
-            })
+            });
         }
-        const userexist = await Usermodel.findOne({ email })
+
+         
+        const userexist = await Usermodel.findOne({ email });
         if (userexist) {
             return res.status(409).json({
                 message: "User already exists",
                 success: false
-            })
+            });
         }
-        const encryptedString = cryptr.encrypt(password);
-        const otp = Math.floor(100000 + Math.random() * 90000)
+
+         
+        const encryptedPassword = cryptr.encrypt(password);
+
+         
+        const otp = Math.floor(100000 + Math.random() * 900000);
+
+         
         const user = await Usermodel.create({
             name,
             email,
-            password: encryptedString,
+            password: encryptedPassword,
             otp: otp,
             otpexpire: Date.now() + 3 * 60 * 1000
+        });
 
-        })
-        const mailRes = await sendOtpMail(email, otp)
-        console.log(mailRes)
-        res.status(201).json({
+         
+        await sendOtpMail(email, otp);
+
+         
+        return res.status(201).json({
             message: "User Created Successfully",
             success: true,
             id: user._id,
             name: user.name,
             email: user.email
-        })
-
+        });
 
     } catch (error) {
-        console.log(error)
+        console.log(error);
         return res.status(500).json({
             message: "Internal Server Error",
             success: false
-        })
+        });
     }
-}
+};
 
 const login = async (req, res) => {
     try {
@@ -79,6 +90,17 @@ const login = async (req, res) => {
                 success: false
             });
         }
+
+
+       const token =  generateToken(userexist._id)
+
+        res.cookie("jwt", token, {
+            maxAge: 30*24*60*60*1000, //30days
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
+            path: "/"
+        });
 
         return res.status(200).json({
             message: "User Login Successfully",

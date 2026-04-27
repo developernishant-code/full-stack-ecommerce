@@ -3,6 +3,7 @@ import axios from 'axios';
 const notify = (msg, flag) => toast(msg, { type: flag ? "success" : "error" })
 const axiosinstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
+  withCredentials:true
 });
 function slugCreate(value) {
     const slug = value

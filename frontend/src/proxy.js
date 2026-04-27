@@ -9,7 +9,7 @@ const PROTECTED_PATHS = [
 
 export default async function proxy(request) {
   const { pathname } = request.nextUrl;
-  const token = request.cookies.get('auth-token')?.value || null
+  const token = request.cookies.get('jwt')?.value || null
 
   if (PROTECTED_PATHS.includes(pathname) && !token) {
     return NextResponse.redirect(new URL('/login', request.url))
