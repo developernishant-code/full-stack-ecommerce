@@ -152,14 +152,22 @@ const getProduct = async (req, res) => {
 
 const getProductById = async (req, res) => {
     try {
-        const id = req.params.id
-        const allProduct = await ProductModel.findById(id)
+        
+
+        const id = req.params.id;
+
+        const allProduct = await ProductModel.findById(id);
+
         return res.status(200).json({
             message: "Data founded",
             success: true,
             allProduct
         })
+
     } catch (error) {
+
+        console.log(error)
+
         return res.status(500).json({
             message: "Internal Server Error",
             success: false

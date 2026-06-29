@@ -1,114 +1,121 @@
 import Image from 'next/image'
+import { FiClock, FiStar, FiZap } from 'react-icons/fi'
 
 export default function DealsOfTheDay() {
     return (
-        <div className="bg-white rounded-xl shadow-sm overflow-hidden h-full">
+        <div className="bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.05)] overflow-hidden border border-slate-50 h-full">
 
-            {/* Header */}
-            <div className="bg-teal-500 px-6 py-4">
-                <h3 className="text-white font-semibold text-lg">
-                    DEALS OF THE DAY
-                </h3>
+            {/* --- Header with Zap Icon --- */}
+            <div className="bg-slate-900 px-8 py-5 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                    <div className="bg-teal-500 p-1.5 rounded-lg">
+                        <FiZap className="text-white" size={20} />
+                    </div>
+                    <h3 className="text-white font-black text-sm uppercase tracking-[0.2em]">
+                        Deals of the Day
+                    </h3>
+                </div>
+                <div className="hidden sm:flex items-center gap-2 text-teal-400 text-xs font-bold">
+                    <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-teal-500"></span>
+                    </span>
+                    LIVE NOW
+                </div>
             </div>
 
-            {/* Content */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 pt-15">
+            {/* --- Content Grid --- */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 p-8">
 
-                {/* Left: Images */}
-                <div className="flex gap-4">
-
-                    {/* Thumbnails */}
+                {/* Left: Product Showcase (5 Cols) */}
+                <div className="lg:col-span-5 flex gap-5">
+                    {/* Interactive Thumbnails */}
                     <div className="flex flex-col gap-3">
                         {[1, 2, 3].map((_, i) => (
                             <div
                                 key={i}
-                                className="w-14 h-14 border rounded-lg flex items-center justify-center"
+                                className={`w-16 h-16 border-2 rounded-2xl flex items-center justify-center cursor-pointer transition-all ${
+                                    i === 0 ? 'border-teal-500 shadow-lg shadow-teal-100' : 'border-slate-100 hover:border-slate-200'
+                                }`}
                             >
                                 <Image
-                                    src="/products/phone-thumb.png"
+                                    src="/images/home/phone.png"
                                     alt="thumbnail"
-                                    width={40}
-                                    height={40}
+                                    width={45}
+                                    height={45}
                                     className="object-contain"
                                 />
                             </div>
                         ))}
                     </div>
 
-                    {/* Main Image */}
-                    <div className="relative flex-1 h-64">
-                        <span className="absolute top-3 left-3 bg-teal-500 text-white text-xs px-3 py-1 rounded-full z-10">
-                            SAVE $199.00
-                        </span>
+                    {/* Hero Image Container */}
+                    <div className="relative flex-1 bg-slate-50 rounded-3xl p-6 flex items-center justify-center group">
+                        <div className="absolute top-4 left-4 z-10">
+                            <span className="bg-red-500 text-white text-[10px] font-black px-3 py-1.5 rounded-xl shadow-lg shadow-red-200">
+                                SAVE $199.00
+                            </span>
+                        </div>
 
-                        <Image
-                            src="/products/phone-main.png"
-                            alt="Deal Product"
-                            fill
-                            className="object-contain"
-                        />
+                        <div className="relative w-full h-64 transform group-hover:scale-110 transition-transform duration-500">
+                            <Image
+                                src="/images/home/phone.png"
+                                alt="Deal Product"
+                                fill
+                                className="object-contain"
+                            />
+                        </div>
                     </div>
                 </div>
 
-                {/* Right: Details */}
-                <div>
-                    <p className="text-sm text-gray-500 mb-1">(12)</p>
+                {/* Right: Deal Intelligence (7 Cols) */}
+                <div className="lg:col-span-7 flex flex-col justify-center">
+                    <div className="flex items-center gap-1 mb-2 text-amber-400">
+                        {[1, 2, 3, 4, 5].map((s) => <FiStar key={s} size={14} fill="currentColor" />)}
+                        <span className="text-xs text-slate-400 font-bold ml-2">(12 Reviews)</span>
+                    </div>
 
-                    <h4 className="font-semibold mb-3">
-                        Xioma Redmi Note 11 Pro 256GB 2023, Black Smartphone
+                    <h4 className="text-2xl font-black text-slate-800 leading-tight mb-4 tracking-tighter">
+                        Xiaomi Redmi Note 11 Pro <span className="text-teal-600">256GB</span> Edition, Midnight Black
                     </h4>
 
-                    <div className="flex items-center gap-3 mb-4">
-                        <span className="text-teal-500 text-xl font-bold">
-                            $569.00
-                        </span>
-                        <span className="line-through text-gray-400">
-                            $759.00
-                        </span>
+                    <div className="flex items-end gap-3 mb-6">
+                        <span className="text-3xl font-black text-slate-900">$569.00</span>
+                        <span className="text-lg line-through text-slate-300 font-bold mb-1">$759.00</span>
                     </div>
 
-                    <ul className="text-sm text-gray-600 space-y-2 mb-4">
-                        <li>• Intel LGA 1700 Socket: Supports 13th & 12th Gen</li>
-                        <li>• DDR5 Compatible: 4*DIMM Memory</li>
-                        <li>• Commanding Power Design: Twin 16+1+2</li>
-                    </ul>
-
-                    {/* Badges */}
-                    <div className="flex gap-3 mb-4">
-                        <span className="text-xs bg-teal-100 text-teal-600 px-3 py-1 rounded-full">
-                            FREE SHIPPING
-                        </span>
-                        <span className="text-xs bg-teal-100 text-teal-600 px-3 py-1 rounded-full">
-                            FREE GIFT
-                        </span>
-                    </div>
-
-                    {/* Countdown (UI only) */}
-                    <div className="mb-4">
-                        <p className="text-sm font-medium mb-2">
-                            HURRY UP! PROMOTION WILL EXPIRES IN
+                    <div className="space-y-3 mb-8">
+                        <p className="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                            <FiClock className="text-teal-500" /> Offer Ends In:
                         </p>
-
-                        <div className="flex gap-3">
-                            {['162d', '9h', '2m', '4s'].map((time, i) => (
-                                <div
-                                    key={i}
-                                    className="bg-gray-100 rounded-lg px-3 py-2 text-center text-sm font-semibold"
-                                >
-                                    {time}
+                        <div className="flex gap-2">
+                            {['162', '09', '02', '45'].map((num, i) => (
+                                <div key={i} className="flex items-center gap-2">
+                                    <div className="bg-slate-100 w-12 h-12 rounded-xl flex items-center justify-center text-slate-800 font-black text-lg border border-slate-200/50">
+                                        {num}
+                                    </div>
+                                    {i < 3 && <span className="font-bold text-slate-300">:</span>}
                                 </div>
                             ))}
                         </div>
                     </div>
 
-                    {/* Progress */}
-                    <div>
-                        <div className="h-2 bg-gray-200 rounded-full overflow-hidden mb-2">
-                            <div className="h-full bg-teal-500 w-[35%]" />
+                    {/* Stock Progress & CTA */}
+                    <div className="bg-teal-50/50 p-6 rounded-2xl border border-teal-100">
+                        <div className="flex justify-between items-end mb-3">
+                            <div className="flex flex-col">
+                                <span className="text-[10px] font-black text-teal-600 uppercase tracking-wider">Availability</span>
+                                <span className="text-sm font-bold text-slate-700">Only 26 items left!</span>
+                            </div>
+                            <span className="text-xs font-black text-slate-400 uppercase">35% Sold</span>
                         </div>
-                        <p className="text-sm text-gray-600">
-                            Sold: <span className="font-semibold">26/75</span>
-                        </p>
+                        <div className="h-3 bg-white rounded-full overflow-hidden mb-6 border border-teal-100">
+                            <div className="h-full bg-teal-500 rounded-full w-[35%] shadow-[0_0_10px_rgba(20,184,166,0.5)]" />
+                        </div>
+                        
+                        <button className="w-full bg-slate-900 text-white py-4 rounded-xl font-black text-sm hover:bg-teal-600 transition-all duration-300 transform active:scale-95 shadow-xl shadow-slate-200">
+                            ADD TO CART — START SAVING
+                        </button>
                     </div>
                 </div>
 

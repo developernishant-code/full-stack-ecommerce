@@ -1,12 +1,12 @@
 import Image from 'next/image'
 
 const categories = [
-    { name: 'iPhone (iOS)', items: 74, icon: '/icons/iphone.png' },
-    { name: 'Android', items: 35, icon: '/icons/android.png' },
-    { name: '5G Support', items: 12, icon: '/icons/5g.png' },
-    { name: 'Gaming', items: 9, icon: '/icons/gaming.png' },
-    { name: 'Xiaomi', items: 52, icon: '/icons/xiaomi.png' },
-    { name: 'Accessories', items: 29, icon: '/icons/accessories.png' },
+    { name: 'iPhone (iOS)', items: 74, },
+    { name: 'Android', items: 35, },
+    { name: '5G Support', items: 12, },
+    { name: 'Gaming', items: 9, },
+    { name: 'Xiaomi', items: 52, },
+    { name: 'Accessories', items: 29, },
 ]
 
 export default function CategoryQuickLinks() {

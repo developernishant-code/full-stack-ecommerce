@@ -7,6 +7,7 @@ const PROTECTED_PATHS = [
   "/profile",
 ];
 
+
 export default async function proxy(request) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get('jwt')?.value || null
@@ -14,11 +15,7 @@ export default async function proxy(request) {
   if (PROTECTED_PATHS.includes(pathname) && !token) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
-
-
-}
-
-// Limit middleware to certain paths (optional)
+}// Limit middleware to certain paths (optional)
 export const config = {
   matcher: [
     /*

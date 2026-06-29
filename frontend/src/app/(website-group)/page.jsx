@@ -16,7 +16,6 @@ export default function page() {
       <SectionFour />
       <SectionFive />
       <SectionSix />
-      <SectionSeven />
     </div>
   )
 }

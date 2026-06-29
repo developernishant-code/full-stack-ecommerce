@@ -15,3 +15,27 @@
 .profile-menu.active {
     @apply bg-teal-600 text-white;
 }
+
+@keyframes swipeIn {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-swipe {
+  animation: swipeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Optional: Utility to hide scrollbars on mobile tab headers */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

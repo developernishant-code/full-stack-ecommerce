@@ -1,12 +1,11 @@
-import Breadcrumb from '@/components/website/global/Breadcrumb'
-import ProfilePage from '@/components/website/Profile/ProfilePage'
+import Profilepage from '@/components/website/Profile/Profilepage'
+import getMe from '@/services/auth'
 import React from 'react'
 
-export default function page() {
-    return (
-        <>
-            <Breadcrumb />
-            <ProfilePage />
-        </>
-    )
+export default async function page() {
+    const {user} = await getMe()
+    console.log(user)
+  return (
+    <Profilepage user={user} name={user.name} />
+  )
 }

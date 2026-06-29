@@ -18,11 +18,11 @@ async function getProduct(query={}) {
 
 async function GetProductById(id) {
   try {
-    const res = await axiosinstance.get(`product/${id}`);
+    const res = await axiosinstance.get(`/product/${id}`);
     return res.data;
   } catch (err) {
-    console.log(err);
-    return [];
+    console.log("API ERROR:", err?.response?.data || err.message);
+    return null; 
   }
 }
 export { getProduct, GetProductById }

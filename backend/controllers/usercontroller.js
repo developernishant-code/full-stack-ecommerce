@@ -8,7 +8,7 @@ const createuser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
-         
+
         if (!name || !email || !password) {
             return res.status(400).json({
                 message: "All Fields are required",
@@ -16,7 +16,7 @@ const createuser = async (req, res) => {
             });
         }
 
-         
+
         const userexist = await Usermodel.findOne({ email });
         if (userexist) {
             return res.status(409).json({
@@ -25,13 +25,13 @@ const createuser = async (req, res) => {
             });
         }
 
-         
+
         const encryptedPassword = cryptr.encrypt(password);
 
-         
+
         const otp = Math.floor(100000 + Math.random() * 900000);
 
-         
+
         const user = await Usermodel.create({
             name,
             email,
@@ -40,10 +40,10 @@ const createuser = async (req, res) => {
             otpexpire: Date.now() + 3 * 60 * 1000
         });
 
-         
+
         await sendOtpMail(email, otp);
 
-         
+
         return res.status(201).json({
             message: "User Created Successfully",
             success: true,
@@ -92,10 +92,10 @@ const login = async (req, res) => {
         }
 
 
-       const token =  generateToken(userexist._id)
+        const token = generateToken(userexist._id)
 
         res.cookie("jwt", token, {
-            maxAge: 30*24*60*60*1000, //30days
+            maxAge: 30 * 24 * 60 * 60 * 1000, //30days
             httpOnly: true,
             secure: false,
             sameSite: "lax",
@@ -194,4 +194,69 @@ const resetOtp = async (req, res) => {
     }
 }
 
-module.exports = { createuser, verifyEmail, resetOtp, login }
+const getMe = async (req, res) => {
+    try {
+        return res.status(201).json({
+            message: " User Founded Successfully",
+            success: true,
+            user: req.user
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Internal Server Error",
+            success: false
+        })
+    }
+}
+const logout = async (req, res) => {
+    try {
+        res.clearCookies('jwt');
+        return res.status(201).json({
+            message: "User logout Successfully",
+            success: true,
+            user: req.user
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Internal Server Error",
+            success: false
+        })
+    }
+}
+
+const addAddress = async (req, res) => {
+    try {
+        const userId = req.user._id
+        const { fullName, phone, pincode, addressLine, city, state, country } = req.body
+        const user = await Usermodel.findById({ _id: userId })
+        console.log(fullName, phone, pincode, addressLine, city, state, country)
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found",
+                success: false
+            })
+        }
+        user.addresses.push({
+            fullName, phone, pincode, addressLine, city, state, country
+        })
+
+
+        await user.save()
+        res.status(200).json({
+            message: "Address Addedd Successfully",
+            success: true,
+            addresses: user.addresses
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message || "Internal Server error",
+            success: false
+        })
+    }
+}
+
+module.exports = { createuser, verifyEmail, resetOtp, login, getMe, logout, addAddress }

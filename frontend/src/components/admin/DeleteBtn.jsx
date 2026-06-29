@@ -24,7 +24,7 @@ export default function DeleteBtn({ id,endpoint }) {
                 icon: "success"
 
             },
-                axiosinstance.delete(`http://localhost:7000/${endpoint}/delete/${id}`)
+                axiosinstance.delete(`https://shopy-zone-backend.onrender.com/${endpoint}/delete/${id}`)
                     .then((res) => {
                         if (res.data.success) {
                             notify(res?.data?.message, true);

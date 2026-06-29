@@ -1,4 +1,4 @@
-"use client"; // ToastContainer browser events use karta hai, isliye client component zaroori hai
+// "use client"; // ToastContainer browser events use karta hai, isliye client component zaroori hai
 
 import React from 'react';
 import { ToastContainer } from "react-toastify";

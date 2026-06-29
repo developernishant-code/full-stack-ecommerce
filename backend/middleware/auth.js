@@ -6,6 +6,10 @@ const protect = async (req, res, next) => {
         token = req.cookies.jwt
     }
 
+    if(!token){
+        token = req.headers.authorization
+    }
+
     if (!token) {
         return res.status(401).json({
             success: false,
@@ -13,7 +17,7 @@ const protect = async (req, res, next) => {
         })
     }
     let decoded = jwt.verify(token, process.env.SECRET_KEY)
-    req.user = await Usermodel.findOne({ _id: decoded.id })
+    req.user = await Usermodel.findOne({ _id: decoded.id }).select("-password")
     if (!req.user) {
         return res.status(403).json({
             success: false,

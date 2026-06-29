@@ -29,7 +29,7 @@ export default function MainBanner() {
 
                         {/* Image */}
                         <img
-                            src="https://images.unsplash.com/photo-1618367581583-1b6c5f5c3d7f"
+                            src="./images/store/headphone.png"
                             alt="Headphone"
                             className="absolute right-0 top-0 h-full object-cover"
                         />
@@ -41,33 +41,39 @@ export default function MainBanner() {
                     </div>
 
                     {/* Right Small Banner */}
-                    <div className="rounded-xl overflow-hidden bg-linear-to-b from-[#dcdff1] to-[#f3d7a6] p-6 flex flex-col justify-between">
-                        <div className="flex justify-between">
-                            <div>
-                                <h3 className="text-xl font-semibold leading-tight mb-2">
-                                    redmi note 12 <br /> Pro+ 5g
-                                </h3>
-                                <p className="text-sm text-gray-600">
-                                    Rise to the challenge
-                                </p>
-                            </div>
-                            <button className="bg-black max-w-50 max-h-10 text-white text-xs px-4 py-2 rounded-full hover:bg-gray-800 transition">
-                                SHOP NOW
-                            </button>
-                        </div>
+                    <div className="relative rounded-2xl overflow-hidden h-[350px] w-full">
+  {/* Background Image */}
+  <img
+    src="./images/store/redmi.png"
+    alt="Redmi Note 12 Pro+ 5G"
+    className="absolute inset-0 w-full h-full object-cover"
+  />
 
+  {/* Gradient Overlay */}
+  <div className="absolute inset-0 bg-gradient-to-br from-[#dcdff1]/90 to-[#f3d7a6]/80" />
 
-                        <div className="flex justify-between items-end mt-4">
-                            <img
-                                src="https://i.imgur.com/7Qp.png"
-                                alt="Phone"
-                                className="h-40 object-contain"
-                            />
+  {/* Content */}
+  <div className="relative z-10 flex flex-col justify-between h-full p-6">
+    <div className="flex justify-between items-start">
+      <div>
+        <h3 className="text-2xl font-bold leading-tight mb-2 text-black">
+          Redmi Note 12 <br /> Pro+ 5G
+        </h3>
 
+        <p className="text-sm text-gray-700">
+          Rise to the challenge
+        </p>
+      </div>
 
-                        </div>
+      <button className="bg-black text-white text-xs px-5 py-2 rounded-full hover:bg-gray-800 transition">
+        SHOP NOW
+      </button>
+    </div>
 
-                    </div>
+    {/* Bottom spacing */}
+    <div />
+  </div>
+</div>
 
                 </div>
             </div>
