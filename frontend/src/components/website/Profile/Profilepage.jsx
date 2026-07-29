@@ -261,7 +261,7 @@ export default function Profilepage({ user }) {
                                     
 
                                     <div className="p-4">
-                                        {cart.items.map((item, index) => (
+                                        {cart?.items?.map((item, index) => (
                                             <div key={index} className="flex items-center gap-3">
                                                 <div className="w-12 h-12 bg-white rounded-xl border border-slate-100 p-1 flex items-center justify-center shrink-0">
                                                     <img src={item.thumbnail} alt={item.name} className="w-full h-full object-contain mix-blend-multiply" />

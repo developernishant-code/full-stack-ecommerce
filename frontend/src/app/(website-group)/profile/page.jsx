@@ -1,4 +1,4 @@
-import Profilepage from '@/components/website/Profile/Profilepage'
+import Profilepage from "../../../components/website/Profile/Profilepage"
 import getMe from '@/services/auth'
 import React from 'react'
 
