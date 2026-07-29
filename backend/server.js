@@ -13,25 +13,25 @@ const { OrderRouter } = require('./routers/Orderrouter')
 
 const server = express()
 
-// Dynamic allowed origins for Localhost and Vercel Deployment
-const allowedOrigins = [
-    "http://localhost:3000",
-    "https://full-stack-ecommerce-pivh.vercel.app"
-];
-
+// 1. CORS Setup - Wildcard / Vercel match check
 server.use(cors({
     origin: function (origin, callback) {
-        // Allow requests with no origin (like Mobile apps, Postman, or Server-to-Server requests)
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error("CORS Blocked for this origin"));
+        if (!origin) return callback(null, true);
+        if (
+            origin === "http://localhost:3000" ||
+            origin.endsWith(".vercel.app")
+        ) {
+            return callback(null, true);
         }
+        return callback(null, true); // Fallback allow
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin']
 }))
+
+// 2. IMPORTANT: Explicitly handle browser pre-flight OPTIONS requests
+server.options('*', cors())
 
 server.use(express.static("public"))
 server.use(express.json())
