@@ -31,7 +31,7 @@ server.use(cors({
 }));
 
 // Pre-flight requests handling
-server.options('*', cors());
+// server.options('*', cors());
 
 // 2. Parsers & Static Content
 server.use(express.static("public"))
