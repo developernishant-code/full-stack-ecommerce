@@ -18,8 +18,9 @@ const server = express()
 // Allowed Origins List
 const allowedOrigins = [
     "http://localhost:3000",
-    "http://localhost:5173" // Vite default port (if applicable)
-]
+    "http://localhost:5173",
+    "https://full-stack-ecommerce-pivh.vercel.app"
+];
 
 // 1. Cleaned CORS Middleware (Handles pre-flight automatically)
 server.use(cors({
