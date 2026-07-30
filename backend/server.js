@@ -15,23 +15,17 @@ const { OrderRouter } = require('./routers/Orderrouter')
 
 const server = express()
 
-// Allowed Origins List
-const allowedOrigins = [
-    "http://localhost:3000",
-    "http://localhost:5173",
-    "https://full-stack-ecommerce-pivh.vercel.app"
-];
-
-// 1. Fixed CORS Configuration (Array Pass Karo Directly)
+// 1. CORS Configuration (Sabse simple aur rock-solid method)
 server.use(cors({
-    origin: allowedOrigins,
+    origin: [
+        "http://localhost:3000",
+        "http://localhost:5173",
+        "https://full-stack-ecommerce-pivh.vercel.app"
+    ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin']
 }));
-
-// Pre-flight requests handling
-// server.options('*', cors());
 
 // 2. Parsers & Static Content
 server.use(express.static("public"))
