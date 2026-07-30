@@ -22,22 +22,16 @@ const allowedOrigins = [
     "https://full-stack-ecommerce-pivh.vercel.app"
 ];
 
-// 1. Cleaned CORS Middleware (Handles pre-flight automatically)
+// 1. Fixed CORS Configuration (Array Pass Karo Directly)
 server.use(cors({
-    origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps or curl requests)
-        if (!origin) return callback(null, true);
-
-        if (allowedOrigins.includes(origin) || origin.endsWith(".vercel.app")) {
-            return callback(null, true);
-        }
-        
-        return callback(new Error("CORS policy error: Origin not allowed"), false);
-    },
+    origin: allowedOrigins,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin']
-}))
+}));
+
+// Pre-flight requests handling
+server.options('*', cors());
 
 // 2. Parsers & Static Content
 server.use(express.static("public"))
